@@ -218,11 +218,19 @@ def merge_results_in_table(
 
 
 def main():
-    result_table = merge_results_in_table(*linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6]))
+    results = linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6])
+    observation_table = results[0]
+    result_table = merge_results_in_table(*results)
+
+    for i, y_range in enumerate(map(lambda y: f'{y[0]} -- {y[1]}', Y_RANGES)):
+        row = [y_range] + observation_table[i]
+        observation_table[i] = format_row(row)
 
     latex = ENV \
             .get_template('homework_template.tex') \
             .render(
+                x_ranges=map(lambda x: f'{x[0]} -- {x[1]}', X_RANGES),
+                observation_table=observation_table,
                 x_means=result_table[0],
                 yk_rows=[
                     result_table[1],

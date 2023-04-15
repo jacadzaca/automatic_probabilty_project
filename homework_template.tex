@@ -7,6 +7,38 @@
 \begin{document}
 \begin{table}[ht!]
     \makebox[\linewidth] {
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+
+        {\multirow{2}{*}{$Y$}} &
+        \multicolumn{5}{|c|}{$X$}
+        \\ \cline{2-6}
+          &
+        {% for x_range in x_ranges %}
+            {% if loop.last %}
+                {{ x_range }}
+            {% else %}
+                {{ x_range }} &
+            {% endif %}
+        {% endfor %}
+        \\ \cline{1-6}
+
+        {% for row in observation_table %}
+            {% for cell in row %}
+                {% if loop.last %}
+                    {{ cell }}
+                {% else %}
+                    {{ cell}} &
+                {% endif %}
+            {% endfor %}
+        \\ \cline{1-6}
+        {% endfor %}
+    \end{tabular}
+    }
+\end{table}
+
+\begin{table}[ht!]
+    \makebox[\linewidth] {
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
 
