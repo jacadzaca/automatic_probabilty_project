@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{tabularx}
+\usepackage[tableposition=top]{caption}
+
+\begin{document}
+\begin{table}[ht!]
+    \makebox[\linewidth] {
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+
+        {\multirow{2}{*}{$\overline{y}_k$}} &
+        \multicolumn{5}{|c|}{$\overline{x}_i$ } &
+        {\multirow{2}{*}{$n_{.k}$}} &
+        {\multirow{2}{*}{$\overline{y}_k n_{.k}$}} &
+        {\multirow{2}{*}{$\overline{y}^{2}_{k}$}} &
+        {\multirow{2}{*}{$\overline{y}^{2}_{k} n_{.k}$}} &
+        {\multirow{2}{*}{$\sum_i \overline{x}_i n_{ik}$}} &
+        {\multirow{2}{*}{$\overline{y}_k \sum_i \overline{x}_i n_{ik}$}}
+        \\ \cline{2-6}
+
+        \multicolumn{1}{|c|}{} &
+        {% for x_mean in x_means %}
+            {{ x_mean }} &
+        {% endfor %}
+         &
+         &
+         &
+         &
+         &
+        \\ \cline{1-12}
+
+        {% for yk_row in yk_rows %}
+            {% for cell in yk_row %}
+                {% if loop.last %}
+                    {{ cell }}
+                {% else %}
+                    {{ cell }} &
+                {% endif %}
+            {% endfor %}
+
+            {% if loop.last %}
+                \\ \cline{1-7} \hhline{============}
+            {% else %}
+                \\ \cline{1-12}
+            {% endif %}
+        {% endfor %}
+
+        $n_i$ &
+        {% for ni in nis %}
+            {% if loop.last %}
+                {{ ni }}
+            {% else %}
+                {{ ni }} &
+            {% endif %}
+        {% endfor %}
+        \\ \cline{1-12}
+
+        $\overline{x}_i n_i$ &
+        {% for x_mean_ni in x_mean_nis %}
+            {% if loop.last %}
+                {{ x_mean_ni }}
+            {% else %}
+                {{ x_mean_ni }} &
+            {% endif %}
+        {% endfor %}
+        \\ \cline{1-7}
+
+        $\overline{x}_{i}^{2}$ &
+        {% for x_mean_squared in x_means_squared %}
+            {{ x_mean_squared }} &
+        {% endfor %}
+        \\ \cline{1-7}
+
+
+        $\overline{x}_{i}^{2} n_i$ &
+        {% for x_mean_squared_ni in x_mean_squared_nis %}
+            {% if loop.last %}
+                {{ x_mean_squared_ni }}
+            {% else %}
+                {{ x_mean_squared_ni }} &
+            {% endif %}
+        {% endfor %}
+        \\ \cline{1-7}
+
+    \end{tabular}
+    }
+\end{table}
+\end{document}

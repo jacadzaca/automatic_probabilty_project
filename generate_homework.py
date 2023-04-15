@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+from jinja2 import Environment, FileSystemLoader
+
+ENV = Environment(
+        loader=FileSystemLoader(searchpath='.'),
+        trim_blocks=True,
+        lstrip_blocks=True
+      )
 
 X_RANGES = [
     (9.5,  10.5),
@@ -178,8 +185,23 @@ def merge_results_in_table(
 def main():
     result_table = merge_results_in_table(*linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6]))
 
-    for row in result_table:
-        print(row)
+    latex = ENV \
+            .get_template('homework_template.tex') \
+            .render(
+                x_means=result_table[0],
+                yk_rows=[
+                    result_table[1],
+                    result_table[2],
+                    result_table[3],
+                    result_table[4],
+                    result_table[5],
+                ],
+                nis=result_table[6],
+                x_mean_nis=result_table[7],
+                x_means_squared=result_table[8],
+                x_mean_squared_nis=result_table[9],
+            )
+    print(latex)
 
 
 if __name__ == '__main__':
