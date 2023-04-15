@@ -164,6 +164,7 @@ def merge_results_in_table(
         previous_len = len(column)
 
 
+    x_means += [None ] *len(y_means)
     result_table = [x_means]
     for i in range(len(y_means)):
         row = [y_means[i]] + observation_table[i]
