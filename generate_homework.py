@@ -101,9 +101,85 @@ def linear_regression_from_corelation_table(index):
     a_prime = round(a_prime, 4)
     b_prime = round(b_prime, 4)
 
+    return (
+        observation_table,
+        nk_column,
+        x_means,
+        y_means,
+        y_mean_nk,
+        y_mean_squared,
+        y_means_squared_nk,
+        sums_x_mean_nik,
+        sums_x_means_nik_times_y_mean,
+        ni_row,
+        x_mean_ni,
+        x_means_squared,
+        x_means_squared_ni,
+        a,
+        b,
+        a_prime,
+        b_prime
+    )
+
+
+def merge_results_in_table(
+        observation_table,
+        nk_column,
+        x_means,
+        y_means,
+        y_mean_nk,
+        y_mean_squared,
+        y_means_squared_nk,
+        sums_x_mean_nik,
+        sums_x_means_nik_times_y_mean,
+        ni_row,
+        x_mean_ni,
+        x_means_squared,
+        x_means_squared_ni,
+        a,
+        b,
+        a_prime,
+        b_prime
+    ):
+    """generate a table like in the example"""
+    column_order = [
+        nk_column,
+        y_mean_nk,
+        y_mean_squared,
+        y_means_squared_nk,
+        sums_x_mean_nik,
+        sums_x_means_nik_times_y_mean,
+    ]
+    previous_len = len(y_means)
+    for column in column_order:
+        if len(column) != previous_len:
+            raise ValueError('columns are not of the same length!')
+        previous_len = len(column)
+
+
+    result_table = [x_means]
+    for i in range(len(y_means)):
+        row = [y_means[i]] + observation_table[i]
+        for j in range(len(column_order)):
+            row += [column_order[j][i]]
+        result_table.append(row)
+
+    ni_row += [sum(ni_row), sum(y_mean_nk), None, sum(y_means_squared_nk), None, sum(sums_x_means_nik_times_y_mean)]
+    result_table.append(ni_row)
+    x_mean_ni += [sum(x_mean_ni)]
+    result_table.append(x_mean_ni)
+    result_table.append(x_means_squared)
+    x_means_squared_ni.append(sum(x_means_squared_ni))
+    result_table.append(x_means_squared_ni)
+
+    return result_table
+
 
 def main():
-    linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6])
+    result_table = merge_results_in_table(*linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6]))
+
+    for row in result_table:
+        print(row)
 
 
 if __name__ == '__main__':
