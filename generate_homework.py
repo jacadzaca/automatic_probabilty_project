@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+import copy
+import random
+from datetime import date
+
 from jinja2 import Environment, FileSystemLoader
 
 ENV = Environment(
@@ -125,7 +129,11 @@ def linear_regression_from_corelation_table(index):
         a,
         b,
         a_prime,
-        b_prime
+        b_prime,
+        x_mean,
+        y_mean,
+        x_variance,
+        y_variance,
     )
 
 
@@ -217,7 +225,8 @@ def merge_results_in_table(
 def main():
     results = linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6])
     observation_table = results[0]
-    a, b, a_prime, b_prime = results[-4:]
+    ni_row = copy.copy(results[9])
+    a, b, a_prime, b_prime, x_mean, y_mean, x_variance, y_variance = results[-8:]
     result_table = merge_results_in_table(*results)
 
     for i, y_range in enumerate(map(lambda y: f'{y[0]} -- {y[1]}', Y_RANGES)):
@@ -227,6 +236,8 @@ def main():
     latex = ENV \
             .get_template('homework_template.tex') \
             .render(
+                author='Jacek',
+                date=date(year=2023, month=5, day=random.randint(1, 27)),
                 x_ranges=map(lambda x: f'{x[0]} -- {x[1]}', X_RANGES),
                 observation_table=observation_table,
                 x_means=result_table[0],
@@ -245,6 +256,14 @@ def main():
                 b=b,
                 a_prime=a_prime,
                 b_prime=b_prime,
+                x_mean=x_mean,
+                y_mean=y_mean,
+                x_variance=x_variance,
+                y_variance=y_variance,
+                sums_x_means_nik_times_y_mean=result_table[6][10],
+                x_means_squared_ni=result_table[9][5],
+                y_means_squared_nk=result_table[6][8],
+                n=sum(ni_row),
             )
     print(latex)
 

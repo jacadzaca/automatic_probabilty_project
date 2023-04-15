@@ -6,9 +6,23 @@
 \usepackage{hhline}
 \usepackage{tabularx}
 \usepackage[tableposition=top]{caption}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{geometry}
+\geometry{bottom=10mm, top=10mm}
+
+\title{Projekt na Rachunek prawdopodobieństwa}
+\author{ {{ author }} }
+\date{ {{ date }} }
+
+\pagenumbering{gobble}
 
 \begin{document}
-\section{Tablica korelacyjna dla mojego numeru indeksu}
+\maketitle
+
+\section{Zadanie}
+Wyznaczyć równania prostych regresji, według danych zgrupowanych w
+tablicy korelacyjnej, powstałej na podstawie mojego numeru indeksu:
 \begin{table}[ht!]
     \makebox[\linewidth] {
     \begin{tabular}{|c|c|c|c|c|c|}
@@ -41,7 +55,26 @@
     }
 \end{table}
 
-\section{Tabela z obliczeniami pomocniczymi}
+\section{Rozwiązanie}
+W celu wyznaczenia prostych regresji, na podstawie poniższej tabeli, wyznaczamy
+najpierw $\overline{x}, \overline{y}, s^2_X$ i $s^2_Y$, a potem ich współczynniki
+kierunkowe i wyrazy wolne.
+\begin{equation*}
+\begin{aligned}[c]
+    \overline{x} = \frac{1}{n} &\sum^{l}_{i=1} \overline{x}_i n_{i.} = {{ x_mean }} \\
+    s^2_X = \frac{1}{n} &\sum^{l}_{i=1} \overline{x}_i^2 n_{i.} - {\overline{x}}^2 =
+    \frac{1}{ {{ n }} } \cdot {{ x_means_squared_ni }} - {{ x_mean ** 2 }} =
+    {{ x_variance }} \\
+\end{aligned}
+    \hspace{1em}
+\begin{aligned}[c]
+    \overline{y} = \frac{1}{n} &\sum^{m}_{k=1} \overline{y}_k n_{.k} = {{ y_mean }} \\
+    s^2_Y = \frac{1}{n} &\sum^{m}_{k=1} \overline{y}_k^2 n_{.k} - {\overline{y}}^2 =
+    \frac{1}{ {{ n }} } \cdot {{ y_means_squared_nk }} - {{ y_mean ** 2 }} =
+    {{ y_variance }} \\
+\end{aligned}
+\end{equation*}
+
 \begin{table}[ht!]
     \makebox[\linewidth] {
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -120,10 +153,21 @@
     }
 \end{table}
 
-\section{Równania prostych}
-Równanie prostej regresji cechy Y względem cechy X, na podstawie próbki ma postać:
-        \[y = {{ a }}x + {{ b }}\]
+\begin{adjustwidth}{-40pt}{0pt}
+\begin{equation*}
+\begin{aligned}[c]
+    a &= \frac{\frac{1}{n}\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik} - \overline{x}\overline{y}}{s^2_X} =
+    \frac{\frac{1}{ {{ n }} } \cdot {{ sums_x_means_nik_times_y_mean }} - {{ x_mean }} \cdot {{ y_mean }} }{\frac{1}{ {{ n }} } \cdot {{ x_means_squared_ni }}  - {{ x_mean }}^2} = {{ a }}
+    & b  = \overline{y} - a\overline{x} = {{ y_mean }} - ({{ a }}) \cdot {{ x_mean }} = {{ b }} & \\
+    a' &= \frac{\frac{1}{n}\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik} - \overline{x}\overline{y}}{s^2_Y} =
+    \frac{\frac{1}{ {{ n }} } \cdot {{ sums_x_means_nik_times_y_mean }} - {{ x_mean }} \cdot {{ y_means_squared_nk }}}{\frac{1}{ {{ n }} } \cdot {{ y_means_squared_nk }} - {{ y_mean }}^2} = {{ a_prime }}
+    & b' = \overline{y} - a'\overline{x} = {{ y_mean }} - ({{ a_prime }})\cdot {{ x_mean }} = {{ b_prime }}
+\end{aligned}
+\end{equation*}
+\end{adjustwidth}
 
-Równanie prostej regresji cechy X względem cechy Y, na podstawie próbki ma postać:
-        \[y = {{ a_prime }}x + {{ b_prime }}\]
+\begin{adjustwidth}{-40pt}{0pt}
+Zatem, równanie prostej regresji cechy Y względem cechy X to: $y = {{ a }}x + {{ b }}$ \\
+Zatem, równanie prostej regresji cechy X względem cechy Y to: $y = {{ a_prime }}x + {{ b_prime }}$
+\end{adjustwidth}
 \end{document}
