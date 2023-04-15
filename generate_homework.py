@@ -171,10 +171,7 @@ def merge_results_in_table(
         x_mean_ni,
         x_means_squared,
         x_means_squared_ni,
-        a,
-        b,
-        a_prime,
-        b_prime
+        *args
     ):
     """generate a table like in the example"""
     column_order = [
@@ -220,6 +217,7 @@ def merge_results_in_table(
 def main():
     results = linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6])
     observation_table = results[0]
+    a, b, a_prime, b_prime = results[-4:]
     result_table = merge_results_in_table(*results)
 
     for i, y_range in enumerate(map(lambda y: f'{y[0]} -- {y[1]}', Y_RANGES)):
@@ -243,6 +241,10 @@ def main():
                 x_mean_nis=result_table[7],
                 x_means_squared=result_table[8],
                 x_mean_squared_nis=result_table[9],
+                a=a,
+                b=b,
+                a_prime=a_prime,
+                b_prime=b_prime,
             )
     print(latex)
 

@@ -1,10 +1,14 @@
 \documentclass{article}
 \usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{hhline}
 \usepackage{tabularx}
 \usepackage[tableposition=top]{caption}
 
 \begin{document}
+\section{Tablica korelacyjna dla mojego numeru indeksu}
 \begin{table}[ht!]
     \makebox[\linewidth] {
     \begin{tabular}{|c|c|c|c|c|c|}
@@ -37,6 +41,7 @@
     }
 \end{table}
 
+\section{Tabela z obliczeniami pomocniczymi}
 \begin{table}[ht!]
     \makebox[\linewidth] {
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -114,4 +119,11 @@
     \end{tabular}
     }
 \end{table}
+
+\section{Równania prostych}
+Równanie prostej regresji cechy Y względem cechy X, na podstawie próbki ma postać:
+        \[y = {{ a }}x + {{ b }}\]
+
+Równanie prostej regresji cechy X względem cechy Y, na podstawie próbki ma postać:
+        \[y = {{ a_prime }}x + {{ b_prime }}\]
 \end{document}
