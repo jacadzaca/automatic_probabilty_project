@@ -129,6 +129,18 @@ def linear_regression_from_corelation_table(index):
     )
 
 
+def precision(f):
+    if not isinstance(f, float) or f.is_integer():
+        return 0
+    return len(str(f).split('.')[-1])
+
+
+def precision_sum(xs):
+    biggset_precision = max(map(precision, xs))
+    f_string = f'{{x:.{biggset_precision}f}}'
+    return f_string.format(x=sum(xs))
+
+
 def merge_results_in_table(
         observation_table,
         nk_column,
@@ -168,16 +180,22 @@ def merge_results_in_table(
     result_table = [x_means]
     for i in range(len(y_means)):
         row = [y_means[i]] + observation_table[i]
-        for j in range(len(column_order)):
-            row += [column_order[j][i]]
+        for column in column_order:
+            biggset_precision = max(map(precision, column))
+            if biggset_precision > 0:
+                f_string = f'{{x:.{biggset_precision}f}}'
+                row += [f_string.format(x=column[i])]
+            else:
+                row += [column[i]]
         result_table.append(row)
 
-    ni_row += [sum(ni_row), sum(y_mean_nk), None, sum(y_means_squared_nk), None, sum(sums_x_means_nik_times_y_mean)]
+
+    ni_row += [precision_sum(ni_row), precision_sum(y_mean_nk), None, precision_sum(y_means_squared_nk), None, precision_sum(sums_x_means_nik_times_y_mean)]
     result_table.append(ni_row)
-    x_mean_ni += [sum(x_mean_ni)]
+    x_mean_ni += [precision_sum(x_mean_ni)]
     result_table.append(x_mean_ni)
     result_table.append(x_means_squared)
-    x_means_squared_ni.append(sum(x_means_squared_ni))
+    x_means_squared_ni.append(precision_sum(x_means_squared_ni))
     result_table.append(x_means_squared_ni)
 
     return result_table
