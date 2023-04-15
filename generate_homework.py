@@ -182,8 +182,25 @@ def merge_results_in_table(
     return result_table
 
 
+def format_row(row):
+    formatted_row = []
+
+    for x in row:
+        if x is None:
+            x = ' '
+        elif x == 0:
+            x = '---'
+        elif isinstance(x, float) and x.is_integer():
+            x = int(x)
+
+        formatted_row.append(str(x))
+
+    return formatted_row
+
+
 def main():
     result_table = merge_results_in_table(*linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6]))
+    result_table = [format_row(row) for row in result_table]
 
     latex = ENV \
             .get_template('homework_template.tex') \
