@@ -141,6 +141,22 @@ def precision_sum(xs):
     return f_string.format(x=sum(xs))
 
 
+def format_row(row):
+    formatted_row = []
+
+    for x in row:
+        if x is None:
+            x = ' '
+        elif x == 0:
+            x = '---'
+        elif isinstance(x, float) and x.is_integer():
+            x = int(x)
+
+        formatted_row.append(str(x))
+
+    return formatted_row
+
+
 def merge_results_in_table(
         observation_table,
         nk_column,
@@ -177,7 +193,7 @@ def merge_results_in_table(
 
 
     x_means += [None ] *len(y_means)
-    result_table = [x_means]
+    result_table = [format_row(x_means)]
     for i in range(len(y_means)):
         row = [y_means[i]] + observation_table[i]
         for column in column_order:
@@ -187,39 +203,22 @@ def merge_results_in_table(
                 row += [f_string.format(x=column[i])]
             else:
                 row += [column[i]]
-        result_table.append(row)
+        result_table.append(format_row(row))
 
 
     ni_row += [precision_sum(ni_row), precision_sum(y_mean_nk), None, precision_sum(y_means_squared_nk), None, precision_sum(sums_x_means_nik_times_y_mean)]
-    result_table.append(ni_row)
+    result_table.append(format_row(ni_row))
     x_mean_ni += [precision_sum(x_mean_ni)]
-    result_table.append(x_mean_ni)
-    result_table.append(x_means_squared)
+    result_table.append(format_row(x_mean_ni))
+    result_table.append(format_row(x_means_squared))
     x_means_squared_ni.append(precision_sum(x_means_squared_ni))
-    result_table.append(x_means_squared_ni)
+    result_table.append(format_row(x_means_squared_ni))
 
     return result_table
 
 
-def format_row(row):
-    formatted_row = []
-
-    for x in row:
-        if x is None:
-            x = ' '
-        elif x == 0:
-            x = '---'
-        elif isinstance(x, float) and x.is_integer():
-            x = int(x)
-
-        formatted_row.append(str(x))
-
-    return formatted_row
-
-
 def main():
     result_table = merge_results_in_table(*linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6]))
-    result_table = [format_row(row) for row in result_table]
 
     latex = ENV \
             .get_template('homework_template.tex') \
