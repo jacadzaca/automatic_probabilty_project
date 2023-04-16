@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 import copy
 import random
 from datetime import date
@@ -223,7 +224,14 @@ def merge_results_in_table(
 
 
 def main():
-    results = linear_regression_from_corelation_table([0, 0, 1, 2, 3, 6])
+    author = sys.argv[1]
+    index = sorted(map(int, list(sys.argv[2])))
+    try:
+        creation_date = sys.argv[3]
+    except IndexError:
+        creation_date = date(year=2023, month=5, day=random.randint(1, 27))
+
+    results = linear_regression_from_corelation_table(index)
     observation_table = results[0]
     ni_row = copy.copy(results[9])
     a, b, a_prime, b_prime, x_mean, y_mean, x_variance, y_variance = results[-8:]
@@ -236,8 +244,8 @@ def main():
     latex = ENV \
             .get_template('homework_template.tex') \
             .render(
-                author='Jacek',
-                date=date(year=2023, month=5, day=random.randint(1, 27)),
+                author=author,
+                date=creation_date,
                 x_ranges=map(lambda x: f'{x[0]} -- {x[1]}', X_RANGES),
                 observation_table=observation_table,
                 x_means=result_table[0],
