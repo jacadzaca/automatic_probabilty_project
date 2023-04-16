@@ -2,7 +2,7 @@
 import sys
 import copy
 import random
-from datetime import date
+from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -229,7 +229,14 @@ def main():
     try:
         creation_date = sys.argv[3]
     except IndexError:
-        creation_date = date(year=2023, month=5, day=random.randint(1, 27))
+        creation_date = datetime(
+                year=2023,
+                month=5,
+                day=random.randint(1, 27),
+                hour=random.randint(9, 23),
+                minute=random.randint(1, 59),
+                second=random.randint(1, 59),
+        )
 
     results = linear_regression_from_corelation_table(index)
     observation_table = results[0]
@@ -245,7 +252,8 @@ def main():
             .get_template('homework_template.tex') \
             .render(
                 author=author,
-                date=creation_date,
+                date=creation_date.date(),
+                metadata_date=creation_date.strftime('D:%Y%m%d%H%M%s'),
                 x_ranges=map(lambda x: f'{x[0]} -- {x[1]}', X_RANGES),
                 observation_table=observation_table,
                 x_means=result_table[0],
