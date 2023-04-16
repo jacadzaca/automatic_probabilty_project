@@ -15,6 +15,7 @@
             pdftitle={Projekt na Rachunek prawdopodobieństwa},
             pdfcreationdate={ {{ metadata_date }} },
             pdfmoddate={ {{ metadata_date }} }]{hyperref}
+\usepackage[dvipsnames]{xcolor}
 
 \title{Projekt na Rachunek prawdopodobieństwa}
 \author{ {{ author }} }
@@ -66,16 +67,16 @@ najpierw $\overline{x}, \overline{y}, s^2_X$ i $s^2_Y$, a potem ich współczynn
 kierunkowe i wyrazy wolne.
 \begin{equation*}
 \begin{aligned}[c]
-    \overline{x} = \frac{1}{n} &\sum^{l}_{i=1} \overline{x}_i n_{i.} = {{ x_mean }} \\
-    s^2_X = \frac{1}{n} &\sum^{l}_{i=1} \overline{x}_i^2 n_{i.} - {\overline{x}}^2 =
-    \frac{1}{ {{ n }} } \cdot {{ x_means_squared_ni }} - {{ x_mean ** 2 }} =
+    \overline{x} = \frac{1}{\textcolor{Turquoise}{n}} &\textcolor{YellowOrange}{\sum^{l}_{i=1} \overline{x}_i n_{i.}} = {{ x_mean }} \\
+    s^2_X = \frac{1}{\textcolor{Turquoise}{n}} &\textcolor{Purple}{\sum^{l}_{i=1} \overline{x}_i^2 n_{i.}} - {\overline{x}}^2 =
+    \frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Purple}{ {{ x_means_squared_ni }} } - {{ x_mean ** 2 }} =
     {{ x_variance }} \\
 \end{aligned}
     \hspace{1em}
 \begin{aligned}[c]
-    \overline{y} = \frac{1}{n} &\sum^{m}_{k=1} \overline{y}_k n_{.k} = {{ y_mean }} \\
-    s^2_Y = \frac{1}{n} &\sum^{m}_{k=1} \overline{y}_k^2 n_{.k} - {\overline{y}}^2 =
-    \frac{1}{ {{ n }} } \cdot {{ y_means_squared_nk }} - {{ y_mean ** 2 }} =
+    \overline{y} = \frac{1}{\textcolor{Turquoise}{n}} &\textcolor{NavyBlue}{\sum^{m}_{k=1} \overline{y}_k n_{.k}} = {{ y_mean }} \\
+    s^2_Y = \frac{1}{\textcolor{Turquoise}{n}} &\textcolor{Green}{\sum^{m}_{k=1} \overline{y}_k^2 n_{.k}} - {\overline{y}}^2 =
+    \frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Green}{ {{ y_means_squared_nk }} } - {{ y_mean ** 2 }} =
     {{ y_variance }} \\
 \end{aligned}
 \end{equation*}
@@ -120,7 +121,13 @@ kierunkowe i wyrazy wolne.
         $n_i$ &
         {% for ni in nis %}
             {% if loop.last %}
-                {{ ni }}
+                \textcolor{Mahogany}{ {{ ni }} }
+            {% elif loop.index == 6 %}
+                \textcolor{Turquoise}{ {{ ni }} } &
+            {% elif loop.index == 7 %}
+                \textcolor{NavyBlue}{ {{ ni }} } &
+            {% elif loop.index == 9 %}
+                \textcolor{Green}{ {{ ni }} } &
             {% else %}
                 {{ ni }} &
             {% endif %}
@@ -130,7 +137,7 @@ kierunkowe i wyrazy wolne.
         $\overline{x}_i n_i$ &
         {% for x_mean_ni in x_mean_nis %}
             {% if loop.last %}
-                {{ x_mean_ni }}
+                \textcolor{YellowOrange}{ {{ x_mean_ni }} }
             {% else %}
                 {{ x_mean_ni }} &
             {% endif %}
@@ -147,7 +154,7 @@ kierunkowe i wyrazy wolne.
         $\overline{x}_{i}^{2} n_i$ &
         {% for x_mean_squared_ni in x_mean_squared_nis %}
             {% if loop.last %}
-                {{ x_mean_squared_ni }}
+                \textcolor{Purple}{ {{ x_mean_squared_ni }} } 
             {% else %}
                 {{ x_mean_squared_ni }} &
             {% endif %}
@@ -161,11 +168,11 @@ kierunkowe i wyrazy wolne.
 \begin{adjustwidth}{-40pt}{0pt}
 \begin{equation*}
 \begin{aligned}[c]
-    a &= \frac{\frac{1}{n}\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik} - \overline{x}\overline{y}}{s^2_X} =
-    \frac{\frac{1}{ {{ n }} } \cdot {{ sums_x_means_nik_times_y_mean }} - {{ x_mean }} \cdot {{ y_mean }} }{\frac{1}{ {{ n }} } \cdot {{ x_means_squared_ni }}  - {{ x_mean }}^2} = {{ a }}
+    a &= \frac{\frac{1}{\textcolor{Turquoise}{n}}\textcolor{Mahogany}{\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik}} - \overline{x}\overline{y}}{s^2_X} =
+    \frac{\frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Mahogany}{ {{ sums_x_means_nik_times_y_mean }} } - {{ x_mean }} \cdot {{ y_mean }} }{\frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Purple}{ {{ x_means_squared_ni }} }  - {{ x_mean }}^2} = {{ a }}
     & b  = \overline{y} - a\overline{x} = {{ y_mean }} - ({{ a }}) \cdot {{ x_mean }} = {{ b }} & \\
-    a' &= \frac{\frac{1}{n}\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik} - \overline{x}\overline{y}}{s^2_Y} =
-    \frac{\frac{1}{ {{ n }} } \cdot {{ sums_x_means_nik_times_y_mean }} - {{ x_mean }} \cdot {{ y_means_squared_nk }}}{\frac{1}{ {{ n }} } \cdot {{ y_means_squared_nk }} - {{ y_mean }}^2} = {{ a_prime }}
+    a' &= \frac{\frac{1}{\textcolor{Turquoise}{n}}\textcolor{Mahogany}{\sum\limits_{k=1}^m \overline{y}_k \sum\limits_{i=1}^l\overline{x}_in_{ik}} - \overline{x}\overline{y}}{s^2_Y} =
+    \frac{\frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Mahogany}{ {{ sums_x_means_nik_times_y_mean }} } - {{ x_mean }} \cdot \textcolor{Green}{ {{ y_means_squared_nk }} }}{\frac{1}{ \textcolor{Turquoise}{ {{ n }} } } \cdot \textcolor{Green}{ {{ y_means_squared_nk }} } - {{ y_mean }}^2} = {{ a_prime }}
     & b' = \overline{y} - a'\overline{x} = {{ y_mean }} - ({{ a_prime }})\cdot {{ x_mean }} = {{ b_prime }}
 \end{aligned}
 \end{equation*}
