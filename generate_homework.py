@@ -98,8 +98,8 @@ def linear_regression_from_corelation_table(index):
     x_mean = sum(dot_product(x_means, ni_row)) / sum(ni_row)
     y_mean = sum(dot_product(y_means, nk_column)) / sum(nk_column)
 
-    x_variance = (sum(x_means_squared_ni) / sum(ni_row)) - x_mean**2
-    y_variance = (sum(y_means_squared_nk) / sum(nk_column)) - y_mean**2
+    x_variance = round((sum(x_means_squared_ni) / sum(ni_row)) - x_mean**2, 4)
+    y_variance = round((sum(y_means_squared_nk) / sum(nk_column)) - y_mean**2, 4)
 
 
     nominator = (sum(sums_x_means_nik_times_y_mean) / sum(nk_column)) - (x_mean * y_mean)
