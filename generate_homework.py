@@ -13,19 +13,19 @@ ENV = Environment(
       )
 
 X_RANGES = [
-    (9.5,  10.5),
-    (10.5, 11.5),
-    (11.5, 12.5),
-    (12.5, 13.5),
-    (13.5, 14.5),
+    (4.5,  5.5),
+    (5.5, 6.5),
+    (6.5, 7.5),
+    (7.5, 8.5),
+    (8.5, 9.5),
 ]
 
 Y_RANGES = [
-    (0.5, 1.0),
-    (1.0, 1.5),
-    (1.5, 2.0),
-    (2.0, 2.5),
-    (2.5, 3.0),
+    (0.0, 1.0),
+    (1.0, 2.0),
+    (2.0, 3.0),
+    (3.0, 4.0),
+    (4.0, 5.0),
 ]
 
 
@@ -104,13 +104,13 @@ def linear_regression_from_corelation_table(index):
 
     nominator = (sum(sums_x_means_nik_times_y_mean) / sum(nk_column)) - (x_mean * y_mean)
     a = (nominator) / x_variance
-    b = y_mean - a * x_mean
     a = round(a, 4)
+    b = y_mean - a * x_mean
     b = round(b, 4)
 
     a_prime = 1 / (nominator / y_variance)
-    b_prime = y_mean - a_prime * x_mean
     a_prime = round(a_prime, 4)
+    b_prime = y_mean - a_prime * x_mean
     b_prime = round(b_prime, 4)
 
     return (
